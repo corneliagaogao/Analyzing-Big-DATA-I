@@ -1,0 +1,15 @@
+SELECT state, count(state) "Number of Stores"
+FROM STRINFO
+GROUP BY state
+ORDER BY count(state) desc
+
+
+
+SELECT count(sku) 
+FROM skuinfo
+
+
+SELECT quantity, amt, orgprice, sprice
+FROM trnsact
+WHERE quantity > 30
+ORDER BY quantity desc
