@@ -13,3 +13,47 @@ SELECT quantity, amt, orgprice, sprice
 FROM trnsact
 WHERE quantity > 30
 ORDER BY quantity desc
+
+
+SELECT count(sku), sum(amt), avg(sprice), avg(orgprice)
+FROM trnsact
+WHERE sprice < orgprice
+
+SELECT count(sku) "N", sum(amt) "Total", avg(sprice), avg(orgprice)
+FROM trnsact
+WHERE sprice < orgprice
+
+SELECT  strinfo.state, strinfo.store, strinfo.city, count(skstinfo.sku)
+FROM strinfo
+INNER JOIN skstinfo on strinfo.store = skstinfo.store
+GROUP BY strinfo.state, strinfo.store, strinfo.city
+ORDER BY strinfo.state
+
+SELECT  a.state, a.store, a.city, count(b.sku)
+FROM strinfo a
+INNER JOIN skstinfo b on a.store = b.store
+GROUP BY a.state, a.store, a.city
+ORDER BY a.state
+
+########R sudio
+#histogram
+data %>% 
+  ggplot(aes(x = Count.STATE)) +
+  geom_histogram()
+library(highcharter)
+#boxplot
+hcboxplot(data$Count.STATE.)
+
+#boxplot
+data1 <- data %>% 
+          filter(Count.STATE. <20)
+hcboxplot(data1$Count.STATE., data1$STATE)
+
+#Geographic plot
+library(openintro)
+head(data)
+data$STATE <- abbr2state(data$STATE)
+highchart() %>% 
+  hc_add_series_map(usgeojson,data, name = 'STATE', value = 'Count.STATE.',
+                    joinBy = c('woename', 'STATE')) %>% 
+  hc_mapNavigation(enabled = T)
